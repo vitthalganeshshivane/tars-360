@@ -7,7 +7,7 @@ export const formatNumber = (num) => {
 export const truncate = (str, len = 100) => str?.length > len ? str.slice(0, len) + '...' : str || '';
 export const slugify = (text) => text?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || '';
 export const getImageUrl = (url) => url || 'https://picsum.photos/800/600';
-export const getPanoramaUrl = (url) => url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Pano_tilt_effect.jpg/1280px-Pano_tilt_effect.jpg';
+export const getPanoramaUrl = (url) => url || 'https://placehold.co/1280x720/333/fff?text=360+Panorama';
 
 export const isEmbeddableVideoUrl = (url = '') => /(?:youtube\.com|youtu\.be|vimeo\.com)/i.test(url);
 

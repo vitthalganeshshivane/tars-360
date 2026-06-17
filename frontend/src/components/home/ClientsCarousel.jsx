@@ -3,12 +3,12 @@ import { useFetch, useInView } from '../../hooks';
 import './ClientsCarousel.css';
 
 const fallbackClients = [
-  { name: 'Luxury Resorts Intl', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/200px-Google_2015_logo.svg.png' },
-  { name: 'National Geographic', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/200px-Airbnb_Logo_B%C3%A9lo.svg.png' },
-  { name: 'Marriott Hotels', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/200px-Amazon_logo.svg.png' },
-  { name: 'Four Seasons', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/200px-Netflix_2015_logo.svg.png' },
-  { name: 'Hilton Worldwide', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Spotify_logo_with_text.svg/200px-Spotify_logo_with_text.svg.png' },
-  { name: 'Accor Hotels', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Logo_TeslaMotors.svg/200px-Logo_TeslaMotors.svg.png' },
+  { name: 'Luxury Resorts Intl', logo: 'https://placehold.co/200x80/fff/333?text=Luxury+Resorts' },
+  { name: 'National Geographic', logo: 'https://placehold.co/200x80/fff/333?text=Nat+Geo' },
+  { name: 'Marriott Hotels', logo: 'https://placehold.co/200x80/fff/333?text=Marriott' },
+  { name: 'Four Seasons', logo: 'https://placehold.co/200x80/fff/333?text=Four+Seasons' },
+  { name: 'Hilton Worldwide', logo: 'https://placehold.co/200x80/fff/333?text=Hilton' },
+  { name: 'Accor Hotels', logo: 'https://placehold.co/200x80/fff/333?text=Accor' },
 ];
 
 export default function ClientsCarousel() {
