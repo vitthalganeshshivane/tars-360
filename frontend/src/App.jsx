@@ -6,6 +6,7 @@ import ScrollToTop from './components/common/ScrollToTop';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import ClickSpark from './components/common/ClickSpark';
 
 const Home = lazy(() => import('./pages/Home'));
 const PhotosPage = lazy(() => import('./pages/PhotosPage'));
@@ -51,6 +52,7 @@ export default function App() {
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <ClickSpark sparkColor="#e60023" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
@@ -81,6 +83,7 @@ export default function App() {
             </Route>
           </Routes>
         </Suspense>
+        </ClickSpark>
       </BrowserRouter>
     </HelmetProvider>
   );

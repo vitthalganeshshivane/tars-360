@@ -23,7 +23,7 @@
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(251, 251, 249, 0.92) 0%, rgba(251, 251, 249, 0.75) 50%, rgba(251, 251, 249, 0.88) 100%);
+  background: linear-gradient(135deg, rgba(251, 251, 249, 0.35) 0%, rgba(251, 251, 249, 0.15) 50%, rgba(251, 251, 249, 0.30) 100%);
 }
 
 .hero__content {
