@@ -1,12 +1,13 @@
 .photos-page__header {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  padding: 140px 0 60px;
+  background: var(--color-surface-soft);
+  padding: 120px 0 60px;
   text-align: center;
-  color: white;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-hairline-soft);
 }
 
-.photos-page__header h1 { font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 12px; }
-.photos-page__header p { color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
+.photos-page__header h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); color: var(--color-ink); margin-bottom: 12px; letter-spacing: -0.02em; }
+.photos-page__header p { color: var(--color-mute); font-size: 1rem; max-width: 500px; margin: 0 auto; }
 
 .photos-page__toolbar {
   display: flex;
@@ -21,47 +22,49 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 20px;
-  background: white;
-  border: 1.5px solid var(--color-gray-200);
+  padding: 8px 16px;
+  background: var(--color-surface-card);
+  border: none;
   border-radius: var(--radius-full);
   flex: 1;
   max-width: 400px;
   transition: var(--transition);
 }
 
-.photos-page__search:focus-within { border-color: var(--color-secondary); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+.photos-page__search:focus-within { border-color: var(--color-ink); }
 
 .photos-page__search input { border: none !important; padding: 4px 0 !important; flex: 1; background: transparent !important; }
-.photos-page__search input:focus { box-shadow: none !important; }
+.photos-page__search input:focus { box-shadow: none !important; border-color: transparent !important; }
 
 .photos-page__filters {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .photos-page__filters select {
-  padding: 10px 16px;
-  border: 1.5px solid var(--color-gray-200);
-  border-radius: var(--radius-md);
-  font-size: 0.9rem;
-  background: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--color-surface-card);
+  color: var(--color-ink);
   min-width: 160px;
 }
 
 .photos-page__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 16px;
   padding-bottom: 40px;
 }
 
 .photos-page__card {
   display: block;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  background: white;
-  border: 1px solid var(--color-gray-100);
+  background: var(--color-surface-card);
+  border: none;
 }
 
 .photos-page__card-img {
@@ -71,7 +74,7 @@
 }
 
 .photos-page__card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-.photos-page__card:hover .photos-page__card-img img { transform: scale(1.06); }
+.photos-page__card:hover .photos-page__card-img img { transform: scale(1.04); }
 
 .photos-page__card-badge {
   position: absolute;
@@ -81,17 +84,17 @@
   align-items: center;
   gap: 5px;
   padding: 4px 10px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  color: white;
-  font-size: 0.8rem;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
   border-radius: var(--radius-full);
 }
 
 .photos-page__card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10, 22, 40, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,12 +104,12 @@
 
 .photos-page__card:hover .photos-page__card-overlay { opacity: 1; }
 
-.photos-page__card-body { padding: 16px; }
-.photos-page__card-body h3 { font-size: 1rem; margin-bottom: 6px; }
-.photos-page__card:hover h3 { color: var(--color-secondary); }
-.photos-page__card-body p { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--color-gray-400); margin-bottom: 10px; }
+.photos-page__card-body { padding: 12px; }
+.photos-page__card-body h3 { font-size: 0.9375rem; margin-bottom: 4px; font-weight: 600; color: var(--color-ink); }
+.photos-page__card:hover h3 { color: var(--color-ink); }
+.photos-page__card-body p { display: flex; align-items: center; gap: 5px; font-size: 0.8125rem; color: var(--color-ash); margin-bottom: 8px; }
 .photos-page__card-meta { display: flex; align-items: center; justify-content: space-between; }
-.photos-page__card-meta span { display: flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--color-gray-500); }
+.photos-page__card-meta span { display: flex; align-items: center; gap: 4px; font-size: 0.8125rem; color: var(--color-mute); }
 
 .photos-page__pagination {
   display: flex;
@@ -119,19 +122,20 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
-  background: white;
-  border: 1px solid var(--color-gray-200);
+  background: var(--color-surface-card);
+  border: none;
   font-weight: 600;
   transition: var(--transition);
+  color: var(--color-ink);
 }
 
-.photos-page__page.active { background: var(--color-secondary); color: white; border-color: var(--color-secondary); }
-.photos-page__page:hover:not(.active) { border-color: var(--color-secondary); color: var(--color-secondary); }
+.photos-page__page.active { background: var(--color-primary); color: white; }
+.photos-page__page:hover:not(.active) { background: var(--color-secondary-bg); }
 
 .photos-page__empty { text-align: center; padding: 80px 0; }
-.photos-page__empty h3 { font-size: 1.3rem; margin-bottom: 8px; }
-.photos-page__empty p { color: var(--color-gray-400); }
+.photos-page__empty h3 { font-size: 1.25rem; margin-bottom: 8px; color: var(--color-ink); }
+.photos-page__empty p { color: var(--color-ash); }
 
 @media (max-width: 1024px) { .photos-page__grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 768px) { .photos-page__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } .photos-page__toolbar { flex-direction: column; align-items: stretch; } .photos-page__search { max-width: none; } }
+@media (max-width: 768px) { .photos-page__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .photos-page__toolbar { flex-direction: column; align-items: stretch; } .photos-page__search { max-width: none; } }
 @media (max-width: 480px) { .photos-page__grid { grid-template-columns: 1fr; } }

@@ -1,57 +1,120 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-tars-primary: #0a1628;
-  --color-tars-primary-light: #112240;
-  --color-tars-emerald: #10b981;
-  --color-tars-cyan: #06b6d4;
-  --color-tars-gold: #c9a84c;
-  --color-tars-gold-light: #d4b96a;
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --color-pinterest-red: #e60023;
+  --color-pinterest-red-pressed: #cc001f;
+  --color-pinterest-ink: #000000;
+  --color-pinterest-ink-soft: #211922;
+  --color-pinterest-body: #33332e;
+  --color-pinterest-charcoal: #262622;
+  --color-pinterest-mute: #62625b;
+  --color-pinterest-ash: #91918c;
+  --color-pinterest-stone: #c8c8c1;
+  --color-pinterest-hairline: #dadad3;
+  --color-pinterest-hairline-soft: #e5e5e0;
+  --color-pinterest-secondary-bg: #e5e5e0;
+  --color-pinterest-secondary-pressed: #c8c8c1;
+  --color-pinterest-canvas: #ffffff;
+  --color-pinterest-surface-soft: #fbfbf9;
+  --color-pinterest-surface-card: #f6f6f3;
+  --color-pinterest-surface-elevated: #ffffff;
+  --color-pinterest-surface-dark: #262622;
+  --color-pinterest-focus-outer: #435ee5;
+  --color-pinterest-error: #9e0a0a;
+  --color-pinterest-error-deep: #cc001f;
+  --color-pinterest-success-deep: #103c25;
+  --color-pinterest-success-pale: #c7f0da;
+  --color-pinterest-accent-purple: #7e238b;
+  --color-pinterest-accent-blue: #617bff;
+  --font-sans: 'Inter', -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 :root {
-  --color-primary: #0a1628;
-  --color-primary-light: #112240;
-  --color-secondary: #10b981;
-  --color-secondary-light: #34d399;
-  --color-accent: #c9a84c;
-  --color-accent-light: #d4b96a;
-  --color-cyan: #06b6d4;
+  /* Pinterest Brand Colors */
+  --color-primary: #e60023;
+  --color-primary-light: #cc001f;
+  --color-secondary: #e60023;
+  --color-secondary-light: #cc001f;
+  --color-accent: #7e238b;
+  --color-accent-light: #6845ab;
+  --color-cyan: #617bff;
   --color-white: #ffffff;
-  --color-gray-50: #f8fafc;
-  --color-gray-100: #f1f5f9;
-  --color-gray-200: #e2e8f0;
-  --color-gray-300: #cbd5e1;
-  --color-gray-400: #94a3b8;
-  --color-gray-500: #64748b;
-  --color-gray-600: #475569;
-  --color-gray-700: #334155;
-  --color-gray-800: #1e293b;
-  --color-gray-900: #0f172a;
-  --color-danger: #ef4444;
-  --color-success: #22c55e;
+  --color-danger: #9e0a0a;
+  --color-success: #103c25;
   --color-warning: #f59e0b;
-  --font-primary: 'Sora', sans-serif;
-  --font-secondary: 'Plus Jakarta Sans', sans-serif;
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Manrope', sans-serif;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
-  --shadow-glass: 0 8px 32px rgba(0,0,0,0.12);
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+
+  /* Pinterest Surface Colors */
+  --color-canvas: #ffffff;
+  --color-surface-soft: #fbfbf9;
+  --color-surface-card: #f6f6f3;
+  --color-surface-dark: #262622;
+
+  /* Pinterest Text Colors */
+  --color-ink: #000000;
+  --color-ink-soft: #211922;
+  --color-body-text: #33332e;
+  --color-charcoal: #262622;
+  --color-mute: #62625b;
+  --color-ash: #91918c;
+  --color-stone: #c8c8c1;
+
+  /* Pinterest Border Colors */
+  --color-hairline: #dadad3;
+  --color-hairline-soft: #e5e5e0;
+  --color-secondary-bg: #e5e5e0;
+  --color-secondary-pressed: #c8c8c1;
+
+  /* Pinterest Gray Scale (warm) */
+  --color-gray-50: #fbfbf9;
+  --color-gray-100: #f6f6f3;
+  --color-gray-200: #e5e5e0;
+  --color-gray-300: #dadad3;
+  --color-gray-400: #c8c8c1;
+  --color-gray-500: #91918c;
+  --color-gray-600: #62625b;
+  --color-gray-700: #33332e;
+  --color-gray-800: #262622;
+  --color-gray-900: #000000;
+
+  /* Typography - Pin Sans (Inter as substitute) */
+  --font-primary: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-secondary: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-heading: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, system-ui, sans-serif;
+
+  /* Shadows - Minimal, only on modals */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.12);
+  --shadow-glass: none;
+
+  /* Pinterest Radius Scale */
+  --radius-none: 0px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 32px;
+  --radius-xl: 32px;
   --radius-full: 9999px;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --container-max: 1400px;
-  --header-height: 80px;
+
+  /* Transitions */
+  --transition: all 0.2s ease;
+  --transition-slow: all 0.3s ease;
+
+  /* Layout */
+  --container-max: 1280px;
+  --header-height: 64px;
+
+  /* Spacing - Pinterest 8px base */
+  --spacing-xxs: 4px;
+  --spacing-xs: 6px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+  --spacing-section: 64px;
 }
 
 @layer base {
@@ -60,14 +123,20 @@
   html { @apply scroll-smooth antialiased; }
 
   body {
-    @apply overflow-x-hidden bg-white font-sans leading-relaxed text-slate-800;
+    @apply overflow-x-hidden bg-white leading-normal;
+    font-family: var(--font-body);
+    color: var(--color-body-text);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold leading-tight text-tars-primary;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
   }
 
-  a { @apply text-inherit no-underline transition-all duration-300; }
+  a { @apply text-inherit no-underline transition-all duration-200; }
   img { @apply block h-auto max-w-full; }
   button { @apply cursor-pointer border-0 bg-transparent font-[inherit] outline-none; }
   input, textarea, select { @apply font-[inherit] outline-none; }
@@ -75,55 +144,109 @@
 }
 
 @layer components {
-  .container { @apply mx-auto w-full max-w-[1400px] px-6 max-md:px-4; }
-  .section { @apply py-24 max-md:py-16; }
-  .section-title { @apply mb-4 text-center text-[clamp(2rem,4vw,3rem)]; }
-  .section-subtitle { @apply mx-auto mb-14 max-w-2xl text-center text-lg text-slate-500; }
+  .container { @apply mx-auto w-full px-6 max-md:px-4; max-width: var(--container-max); }
+  .section { padding-top: var(--spacing-section); padding-bottom: var(--spacing-section); }
+  .section-title {
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+  .section-subtitle {
+    @apply mx-auto mb-14 max-w-2xl text-center;
+    font-size: 1rem;
+    color: var(--color-mute);
+    line-height: 1.5;
+    font-weight: 400;
+  }
 
+  /* Pinterest Button System */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-[0.95rem] font-semibold tracking-normal transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-3.5 py-1.5;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    min-height: 40px;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-br from-tars-emerald to-tars-cyan text-white shadow-sm hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(16,185,129,0.4)];
+    background: var(--color-primary);
+    color: white;
+    &:hover { background: var(--color-primary-light); }
   }
 
   .btn-secondary {
-    @apply border border-white/30 bg-white/10 text-white backdrop-blur-md hover:border-white/50 hover:bg-white/20;
+    background: var(--color-secondary-bg);
+    color: var(--color-ink);
+    &:hover { background: var(--color-secondary-pressed); }
   }
 
   .btn-outline {
-    @apply border-2 border-tars-primary bg-transparent text-tars-primary hover:bg-tars-primary hover:text-white;
+    background: transparent;
+    color: var(--color-ink);
+    border: 1.5px solid var(--color-hairline);
+    &:hover { border-color: var(--color-ash); }
+  }
+
+  .btn-tertiary {
+    background: transparent;
+    color: var(--color-ink);
+    &:hover { background: var(--color-surface-card); }
   }
 
   .btn-gold {
-    @apply bg-gradient-to-br from-tars-gold to-tars-gold-light text-tars-primary hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(201,168,76,0.4)];
+    background: var(--color-primary);
+    color: white;
+    &:hover { background: var(--color-primary-light); }
   }
 
-  .btn-sm { @apply px-5 py-2.5 text-sm; }
-  .btn-lg { @apply px-10 py-4.5 text-[1.05rem]; }
+  .btn-sm { @apply px-3 py-2; font-size: 0.8125rem; }
+  .btn-lg { @apply px-4 py-2.5; font-size: 0.9375rem; }
 
-  .glass { @apply border border-white/10 bg-white/10 backdrop-blur-xl; }
-  .glass-light { @apply border border-white/30 bg-white/70 backdrop-blur-xl; }
+  /* Pinterest Surface System */
+  .glass { background: var(--color-surface-card); border: 1px solid var(--color-hairline-soft); }
+  .glass-light { background: var(--color-canvas); border: 1px solid var(--color-hairline-soft); }
 
+  /* Pinterest Text Utilities */
   .gradient-text,
   .premium-text-emerald {
-    @apply bg-gradient-to-br from-tars-emerald to-tars-cyan bg-clip-text text-transparent;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    color: var(--color-ink);
   }
 
   .gold-text,
   .premium-text-gold {
-    @apply bg-gradient-to-br from-tars-gold to-tars-gold-light bg-clip-text text-transparent;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    color: var(--color-ink);
   }
 
+  /* Pinterest Card System */
   .card,
   .premium-card {
-    @apply overflow-hidden rounded-2xl border border-slate-100 bg-white transition-all duration-300;
+    background: var(--color-surface-card);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transition);
+    border: none;
   }
 
   .card:hover,
   .premium-card:hover {
-    @apply -translate-y-1.5 shadow-xl;
+    transform: none;
+    box-shadow: none;
   }
 }
 
@@ -149,9 +272,9 @@
   text-transform: uppercase;
 }
 
-.badge-primary { background: rgba(10, 22, 40, 0.1); color: var(--color-primary); }
-.badge-secondary { background: rgba(16, 185, 129, 0.1); color: var(--color-secondary); }
-.badge-gold { background: rgba(201, 168, 76, 0.1); color: var(--color-accent); }
+.badge-primary { background: var(--color-surface-card); color: var(--color-ink); }
+.badge-secondary { background: var(--color-surface-card); color: var(--color-ink); }
+.badge-gold { background: var(--color-surface-card); color: var(--color-ink); }
 
 .admin-layout {
   display: flex;
@@ -160,7 +283,7 @@
 
 .admin-sidebar {
   width: 280px;
-  background: var(--color-primary);
+  background: var(--color-surface-dark);
   color: white;
   position: fixed;
   top: 0;
@@ -176,7 +299,7 @@
   flex: 1;
   margin-left: 280px;
   padding: 24px;
-  background: var(--color-gray-50);
+  background: var(--color-surface-soft);
   min-height: 100vh;
 }
 
@@ -194,6 +317,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Pinterest Input System */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -203,20 +327,23 @@ input[type="search"],
 textarea,
 select {
   width: 100%;
-  padding: 12px 16px;
-  border: 1.5px solid var(--color-gray-200);
+  padding: 11px 15px;
+  border: 1px solid var(--color-ash);
   border-radius: var(--radius-md);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   transition: var(--transition);
-  background: white;
-  color: var(--color-gray-800);
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  min-height: 44px;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: var(--color-secondary);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 2px var(--color-ink), 0 0 0 4px var(--color-focus-outer);
+  outline: none;
 }
 
 .form-group {
@@ -228,11 +355,11 @@ select:focus {
   margin-bottom: 6px;
   font-weight: 600;
   font-size: 0.875rem;
-  color: var(--color-gray-700);
+  color: var(--color-ink);
 }
 
 .form-error {
-  color: var(--color-danger);
+  color: var(--color-error);
   font-size: 0.8rem;
   margin-top: 4px;
 }
@@ -245,18 +372,18 @@ select:focus {
 
 /* Swiper customization */
 .swiper-pagination-bullet-active {
-  background: var(--color-secondary) !important;
+  background: var(--color-primary) !important;
 }
 
-/* Masonry */
+/* Masonry - Pinterest style tight gutters */
 .masonry-grid {
   columns: 4 280px;
-  column-gap: 16px;
+  column-gap: 8px;
 }
 .masonry-grid > * {
   break-inside: avoid;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 @media (max-width: 1200px) { .masonry-grid { columns: 3 240px; } }
-@media (max-width: 768px) { .masonry-grid { columns: 2 200px; } }
+@media (max-width: 768px) { .masonry-grid { columns: 2 200px; column-gap: 6px; } .masonry-grid > * { margin-bottom: 6px; } }
 @media (max-width: 480px) { .masonry-grid { columns: 1; } }

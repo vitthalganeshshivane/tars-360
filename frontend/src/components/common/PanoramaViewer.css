@@ -2,7 +2,7 @@
    @photo-sphere-viewer/core/index.css in PanoramaViewer.jsx. */
 
 .panorama-viewer-wrap {
-  background: #111827;
+  background: var(--color-gray-900);
 }
 
 .panorama-viewer-wrap .psv-container {
@@ -18,19 +18,19 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  background: rgba(10, 10, 20, 0.72);
+  background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(8px);
   color: #fff;
   font-size: 15px;
   font-weight: 600;
-  border-radius: var(--radius-lg, 16px);
+  border-radius: var(--radius-lg);
 }
 
 .panorama-loading__spinner {
   width: 46px;
   height: 46px;
   border: 3px solid rgba(255, 255, 255, 0.15);
-  border-top-color: var(--color-secondary, #10b981);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: psv-spin 0.85s linear infinite;
 }
@@ -48,11 +48,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: rgba(10, 10, 20, 0.9);
+  background: rgba(0, 0, 0, 0.9);
   color: #fff;
   text-align: center;
   padding: 24px;
-  border-radius: var(--radius-lg, 16px);
+  border-radius: var(--radius-lg);
 }
 
 .panorama-error p {
@@ -69,14 +69,13 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  background: rgba(0, 0, 0, 0.55);
+  background: var(--color-canvas);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
+  color: var(--color-ink);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 7px 16px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   pointer-events: none;
   white-space: nowrap;
   animation: hint-appear 0.5s ease both, hint-fade 0.6s ease 4s forwards;

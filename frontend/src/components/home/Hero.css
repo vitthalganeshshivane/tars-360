@@ -5,6 +5,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
+  background: var(--color-surface-soft);
 }
 
 .hero__slide {
@@ -22,7 +23,7 @@
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(10, 22, 40, 0.85) 0%, rgba(10, 22, 40, 0.4) 50%, rgba(10, 22, 40, 0.7) 100%);
+  background: linear-gradient(135deg, rgba(251, 251, 249, 0.92) 0%, rgba(251, 251, 249, 0.75) 50%, rgba(251, 251, 249, 0.88) 100%);
 }
 
 .hero__content {
@@ -41,38 +42,39 @@
 
 .hero__subtitle {
   display: inline-block;
-  font-family: var(--font-primary);
-  font-size: 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--color-secondary);
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
   margin-bottom: 16px;
   padding: 6px 16px;
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(230, 0, 35, 0.08);
   border-radius: var(--radius-full);
-  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .hero__title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  color: white;
+  font-size: clamp(2.5rem, 6vw, 4.375rem);
+  color: var(--color-ink);
   margin-bottom: 20px;
   line-height: 1.1;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .hero__desc {
-  font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.125rem;
+  color: var(--color-body-text);
   max-width: 540px;
   margin-bottom: 36px;
-  line-height: 1.7;
+  line-height: 1.5;
+  font-weight: 400;
 }
 
 .hero__actions {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -91,16 +93,15 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--color-stone);
   border: 2px solid transparent;
   transition: var(--transition);
   cursor: pointer;
 }
 
 .hero__dot--active {
-  background: var(--color-secondary);
-  border-color: rgba(16, 185, 129, 0.3);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+  background: var(--color-primary);
+  border-color: rgba(230, 0, 35, 0.2);
 }
 
 .hero__scroll {
@@ -112,7 +113,7 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-ash);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -122,7 +123,7 @@
 .hero__scroll-line {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--color-secondary), transparent);
+  background: linear-gradient(to bottom, var(--color-primary), transparent);
 }
 
 @media (max-width: 768px) {
