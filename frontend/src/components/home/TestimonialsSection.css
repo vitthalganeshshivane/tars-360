@@ -1,0 +1,108 @@
+.testimonials__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.testimonials__nav {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-600);
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.testimonials__nav:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.testimonials__card {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-gray-100);
+  position: relative;
+}
+
+.testimonials__quote-icon {
+  color: var(--color-accent);
+  opacity: 0.3;
+  margin-bottom: 16px;
+}
+
+.testimonials__content {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--color-gray-700);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.testimonials__stars {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.testimonials__author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.testimonials__author img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonials__author h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.testimonials__author p {
+  font-size: 0.85rem;
+  color: var(--color-gray-400);
+  text-align: left;
+}
+
+.testimonials__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.testimonials__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-gray-300);
+  transition: var(--transition);
+}
+
+.testimonials__dot.active { background: var(--color-accent); width: 24px; border-radius: 4px; }
+
+@media (max-width: 640px) {
+  .testimonials__wrapper { gap: 16px; }
+  .testimonials__card { padding: 24px; }
+  .testimonials__content { font-size: 1rem; }
+  .testimonials__nav { width: 40px; height: 40px; }
+}

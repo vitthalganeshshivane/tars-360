@@ -1,0 +1,103 @@
+.footer {
+  background: var(--color-primary);
+  color: rgba(255, 255, 255, 0.7);
+  padding-top: 80px;
+}
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 60px;
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.footer__logo-icon { color: white; }
+.footer__logo-text {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer__desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 320px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 12px;
+}
+
+.footer__socials a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer__socials a:hover {
+  background: var(--color-secondary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.footer__col h4 {
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-family: var(--font-heading);
+}
+
+.footer__col a {
+  display: block;
+  font-size: 0.9rem;
+  padding: 6px 0;
+  transition: var(--transition);
+}
+
+.footer__col a:hover { color: var(--color-secondary); transform: translateX(4px); }
+
+.footer__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  padding: 8px 0;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+  .footer__top { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .footer__top { grid-template-columns: 1fr; gap: 32px; }
+  .footer__bottom { flex-direction: column; gap: 8px; text-align: center; }
+}

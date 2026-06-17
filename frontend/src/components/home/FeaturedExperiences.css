@@ -1,0 +1,105 @@
+.featured__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.featured__card {
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: white;
+  border: 1px solid var(--color-gray-100);
+}
+
+.featured__card-img {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.featured__card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featured__card:hover .featured__card-img img { transform: scale(1.08); }
+
+.featured__card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+}
+
+.featured__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 22, 40, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.featured__card:hover .featured__card-overlay { opacity: 1; }
+
+.featured__card-body {
+  padding: 20px;
+}
+
+.featured__card-body h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  transition: var(--transition);
+}
+
+.featured__card:hover .featured__card-body h3 { color: var(--color-secondary); }
+
+.featured__card-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--color-gray-400);
+  margin-bottom: 12px;
+}
+
+.featured__card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.featured__card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--color-gray-500);
+}
+
+.featured__cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1200px) { .featured__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .featured__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+@media (max-width: 480px) { .featured__grid { grid-template-columns: 1fr; } }

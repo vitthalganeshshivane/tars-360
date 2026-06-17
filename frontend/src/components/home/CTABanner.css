@@ -1,0 +1,58 @@
+.cta-banner {
+  position: relative;
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+.cta-banner__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #0d2847 50%, #0a1628 100%);
+}
+
+.cta-banner__bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 60%);
+}
+
+.cta-banner__content {
+  position: relative;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  color: white;
+}
+
+.cta-banner__badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.cta-banner__content h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: white;
+  margin-bottom: 20px;
+}
+
+.cta-banner__content p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+.cta-banner__actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}

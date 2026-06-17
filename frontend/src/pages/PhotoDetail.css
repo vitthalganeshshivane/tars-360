@@ -1,0 +1,174 @@
+.photo-detail { padding-top: 100px; }
+.photo-detail--fullscreen { position: fixed; inset: 0; z-index: 5000; padding: 0; background: black; }
+.photo-detail--fullscreen .photo-detail__layout { max-width: none; height: 100vh; }
+.photo-detail--fullscreen .photo-detail__panorama { height: 100vh; border-radius: 0; }
+.photo-detail--fullscreen .photo-detail__info { display: none; }
+.photo-detail--fullscreen .photo-detail__header { display: none; }
+.photo-detail--fullscreen .photo-detail__related { display: none; }
+
+.photo-detail__header { padding: 20px 0; }
+
+.photo-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-gray-500);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.photo-detail__back:hover { color: var(--color-secondary); }
+
+.photo-detail__layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+  min-height: 60vh;
+}
+
+.photo-detail__viewer { position: relative; }
+
+.photo-detail__panorama {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-gray-900);
+}
+
+.photo-detail__viewer-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+/* Float these controls over the PanoramaViewer component */
+.photo-detail__viewer-controls--float {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+}
+
+.photo-detail__viewer-controls button,
+.photo-detail__viewer-controls--float button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.photo-detail__viewer-controls button:hover,
+.photo-detail__viewer-controls--float button:hover { background: var(--color-secondary); }
+
+.photo-detail__360-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  z-index: 10;
+}
+
+.photo-detail__info-inner {
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-100);
+  padding: 28px;
+  position: sticky;
+  top: 100px;
+}
+
+.photo-detail__meta-top {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.photo-detail__info-inner h1 { font-size: 1.5rem; margin-bottom: 8px; }
+
+.photo-detail__location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-gray-400);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.photo-detail__desc { margin-bottom: 20px; }
+.photo-detail__desc h3,
+.photo-detail__tags h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-gray-500); margin-bottom: 10px; font-family: var(--font-body); }
+.photo-detail__desc p { font-size: 0.95rem; line-height: 1.7; color: var(--color-gray-600); }
+
+.photo-detail__tags-list { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.photo-detail__stats {
+  display: flex;
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-gray-100);
+}
+
+.photo-detail__stats div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-gray-500);
+  font-size: 0.9rem;
+}
+
+.photo-detail__related {
+  padding: 60px 0;
+}
+
+.photo-detail__related h2 { font-size: 1.5rem; margin-bottom: 24px; }
+
+.photo-detail__related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.photo-detail__related-card {
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.photo-detail__related-card img { width: 100%; height: 180px; object-fit: cover; transition: transform 0.5s; }
+.photo-detail__related-card:hover img { transform: scale(1.06); }
+
+.photo-detail__related-info {
+  padding: 14px;
+  background: white;
+}
+
+.photo-detail__related-info h4 { font-size: 0.95rem; margin-bottom: 4px; }
+.photo-detail__related-info p { font-size: 0.8rem; color: var(--color-gray-400); display: flex; align-items: center; gap: 4px; }
+
+@media (max-width: 768px) {
+  .photo-detail__layout { grid-template-columns: 1fr; }
+  .photo-detail__panorama { height: 300px; }
+  .photo-detail__related-grid { grid-template-columns: repeat(2, 1fr); }
+}
