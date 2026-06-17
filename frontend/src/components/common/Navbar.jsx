@@ -31,8 +31,8 @@ export default function Navbar() {
         activeHref={location.pathname}
         ease="power3.easeOut"
         baseColor="#ffffff"
-        pillColor="#000000"
-        hoveredPillTextColor="#ffffff"
+        pillColor="#e60023"
+        hoveredPillTextColor="#000000"
         pillTextColor="#ffffff"
         initialLoadAnimation={true}
       />
