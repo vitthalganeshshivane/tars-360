@@ -18,7 +18,7 @@ const app = express();
 
 
 const allowedOrigins = [
-  'http://localhost:5173',
+  'https://tars-360.vercel.app',
   process.env.CLIENT_URL
 ];
 
