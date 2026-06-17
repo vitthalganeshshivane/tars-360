@@ -16,9 +16,27 @@ import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
 
-// Security
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.CLIENT_URL
+];
+
+app.use(helmet({ 
+  crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true
+  })
+);
 
 // Rate limiting
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 5000, message: { success: false, message: 'Too many requests' } });
