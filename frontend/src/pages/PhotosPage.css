@@ -42,12 +42,13 @@
 }
 
 .photos-page__filters select {
-  padding: 8px 16px;
+  padding: 8px 36px 8px 16px;
   border: none;
   border-radius: var(--radius-full);
   font-size: 0.875rem;
   font-weight: 600;
-  background: var(--color-surface-card);
+  background-color: var(--color-surface-card);
+  background-position: right 10px center;
   color: var(--color-ink);
   min-width: 160px;
 }
