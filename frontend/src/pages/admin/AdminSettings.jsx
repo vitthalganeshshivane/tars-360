@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FiSave, FiPlus, FiTrash2, FiUpload, FiLink } from 'react-icons/fi';
 import SEO from '../../components/common/SEO';
 import API from '../../api/axios';
+import { FileUpload } from '../../components/common/FileUpload';
 import './AdminPages.css';
 
 export default function AdminSettings() {
@@ -13,6 +14,7 @@ export default function AdminSettings() {
   const [heroSlides, setHeroSlides] = useState([]);
   const [teamPhotoMode, setTeamPhotoMode] = useState('url');
   const [teamPhotoPreview, setTeamPhotoPreview] = useState('');
+  const [teamPhotoFiles, setTeamPhotoFiles] = useState([]);
   const teamPhotoValue = watch('teamPhoto');
 
   useEffect(() => {
@@ -106,6 +108,73 @@ export default function AdminSettings() {
     }
   };
 
+  const handleTeamPhotoDrop = (files) => {
+    const file = files[0];
+    if (!file) return;
+
+    const id = Math.random().toString(36).slice(2);
+    const newFile = { id, name: file.name, size: file.size, type: file.type, progress: 0, failed: false, fileObject: file };
+    setTeamPhotoFiles([newFile]);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    API.post('/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: (e) => {
+        if (e.total) {
+          const progress = Math.round((e.loaded * 100) / e.total);
+          setTeamPhotoFiles((prev) => prev.map((f) => f.id === id ? { ...f, progress } : f));
+        }
+      }
+    }).then(({ data }) => {
+      const url = data.data?.url || data.url || data.file?.url;
+      if (url) {
+        setTeamPhotoFiles((prev) => prev.map((f) => f.id === id ? { ...f, progress: 100, url } : f));
+        setValue('teamPhoto', url);
+        setTeamPhotoPreview(url);
+      } else {
+        setTeamPhotoFiles((prev) => prev.map((f) => f.id === id ? { ...f, failed: true, progress: 0 } : f));
+      }
+    }).catch(() => {
+      setTeamPhotoFiles((prev) => prev.map((f) => f.id === id ? { ...f, failed: true, progress: 0 } : f));
+    });
+  };
+
+  const handleTeamPhotoDelete = () => {
+    setTeamPhotoFiles([]);
+    setTeamPhotoPreview('');
+    setValue('teamPhoto', '');
+  };
+
+  const handleTeamPhotoRetry = () => {
+    const file = teamPhotoFiles[0];
+    if (!file) return;
+    setTeamPhotoFiles((prev) => prev.map((f) => ({ ...f, failed: false, progress: 0 })));
+
+    const formData = new FormData();
+    formData.append('file', file.fileObject);
+    API.post('/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: (e) => {
+        if (e.total) {
+          const progress = Math.round((e.loaded * 100) / e.total);
+          setTeamPhotoFiles((prev) => prev.map((f) => f.id === file.id ? { ...f, progress } : f));
+        }
+      }
+    }).then(({ data }) => {
+      const url = data.data?.url || data.url || data.file?.url;
+      if (url) {
+        setTeamPhotoFiles((prev) => prev.map((f) => f.id === file.id ? { ...f, progress: 100, url } : f));
+        setValue('teamPhoto', url);
+        setTeamPhotoPreview(url);
+      } else {
+        setTeamPhotoFiles((prev) => prev.map((f) => f.id === file.id ? { ...f, failed: true, progress: 0 } : f));
+      }
+    }).catch(() => {
+      setTeamPhotoFiles((prev) => prev.map((f) => f.id === file.id ? { ...f, failed: true, progress: 0 } : f));
+    });
+  };
+
   if (loading) return <div className="admin-page"><p>Loading settings...</p></div>;
 
   return (
@@ -118,13 +187,13 @@ export default function AdminSettings() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="admin-settings__section">
             <h2>General</h2>
-            <div className="form-group"><label className="form-label">Site Name</label><input {...register('siteName')} /></div>
+            <div className="form-group"><label className="form-label">Site Name</label><input type="text" {...register('siteName')} /></div>
             <div className="form-group"><label className="form-label">Site Description</label><textarea rows={3} {...register('siteDescription')} /></div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div className="form-group"><label className="form-label">Email</label><input type="email" {...register('email')} /></div>
-              <div className="form-group"><label className="form-label">Phone</label><input {...register('phone')} /></div>
+              <div className="form-group"><label className="form-label">Phone</label><input type="tel" {...register('phone')} /></div>
             </div>
-            <div className="form-group"><label className="form-label">Address</label><input {...register('address')} /></div>
+            <div className="form-group"><label className="form-label">Address</label><input type="text" {...register('address')} /></div>
           </div>
 
           <div className="admin-settings__section">
@@ -136,14 +205,14 @@ export default function AdminSettings() {
                   <button type="button" className="admin-crud__btn admin-crud__btn--delete" onClick={() => removeSlide(i)}><FiTrash2 size={14} /></button>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div className="form-group"><label className="form-label">Title</label><input value={slide.title} onChange={(e) => updateSlide(i, 'title', e.target.value)} /></div>
-                  <div className="form-group"><label className="form-label">Subtitle</label><input value={slide.subtitle} onChange={(e) => updateSlide(i, 'subtitle', e.target.value)} /></div>
+                  <div className="form-group"><label className="form-label">Title</label><input type="text" value={slide.title} onChange={(e) => updateSlide(i, 'title', e.target.value)} /></div>
+                  <div className="form-group"><label className="form-label">Subtitle</label><input type="text" value={slide.subtitle} onChange={(e) => updateSlide(i, 'subtitle', e.target.value)} /></div>
                 </div>
                 <div className="form-group"><label className="form-label">Description</label><textarea rows={2} value={slide.description} onChange={(e) => updateSlide(i, 'description', e.target.value)} /></div>
-                <div className="form-group"><label className="form-label">Image URL</label><input value={slide.image} onChange={(e) => updateSlide(i, 'image', e.target.value)} /></div>
+                <div className="form-group"><label className="form-label">Image URL</label><input type="url" value={slide.image} onChange={(e) => updateSlide(i, 'image', e.target.value)} /></div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div className="form-group"><label className="form-label">CTA Text</label><input value={slide.cta} onChange={(e) => updateSlide(i, 'cta', e.target.value)} /></div>
-                  <div className="form-group"><label className="form-label">CTA Link</label><input value={slide.link} onChange={(e) => updateSlide(i, 'link', e.target.value)} /></div>
+                  <div className="form-group"><label className="form-label">CTA Text</label><input type="text" value={slide.cta} onChange={(e) => updateSlide(i, 'cta', e.target.value)} /></div>
+                  <div className="form-group"><label className="form-label">CTA Link</label><input type="text" value={slide.link} onChange={(e) => updateSlide(i, 'link', e.target.value)} /></div>
                 </div>
               </div>
             ))}
@@ -153,17 +222,17 @@ export default function AdminSettings() {
           <div className="admin-settings__section">
             <h2>Social Links</h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-              <div className="form-group"><label className="form-label">Instagram</label><input {...register('socialLinks.instagram')} placeholder="https://instagram.com/..." /></div>
-              <div className="form-group"><label className="form-label">Twitter</label><input {...register('socialLinks.twitter')} placeholder="https://twitter.com/..." /></div>
-              <div className="form-group"><label className="form-label">YouTube</label><input {...register('socialLinks.youtube')} placeholder="https://youtube.com/..." /></div>
-              <div className="form-group"><label className="form-label">Facebook</label><input {...register('socialLinks.facebook')} placeholder="https://facebook.com/..." /></div>
-              <div className="form-group"><label className="form-label">LinkedIn</label><input {...register('socialLinks.linkedin')} placeholder="https://linkedin.com/..." /></div>
+              <div className="form-group"><label className="form-label">Instagram</label><input type="url" {...register('socialLinks.instagram')} placeholder="https://instagram.com/..." /></div>
+              <div className="form-group"><label className="form-label">Twitter</label><input type="url" {...register('socialLinks.twitter')} placeholder="https://twitter.com/..." /></div>
+              <div className="form-group"><label className="form-label">YouTube</label><input type="url" {...register('socialLinks.youtube')} placeholder="https://youtube.com/..." /></div>
+              <div className="form-group"><label className="form-label">Facebook</label><input type="url" {...register('socialLinks.facebook')} placeholder="https://facebook.com/..." /></div>
+              <div className="form-group"><label className="form-label">LinkedIn</label><input type="url" {...register('socialLinks.linkedin')} placeholder="https://linkedin.com/..." /></div>
             </div>
           </div>
 
           <div className="admin-settings__section">
             <h2>About</h2>
-            <div className="form-group"><label className="form-label">About Title</label><input {...register('aboutTitle')} /></div>
+            <div className="form-group"><label className="form-label">About Title</label><input type="text" {...register('aboutTitle')} /></div>
             <div className="form-group"><label className="form-label">About Description</label><textarea rows={4} {...register('aboutDescription')} /></div>
             <div className="form-group"><label className="form-label">Mission</label><textarea rows={3} {...register('mission')} /></div>
             <div className="form-group"><label className="form-label">Vision</label><textarea rows={3} {...register('vision')} /></div>
@@ -187,16 +256,23 @@ export default function AdminSettings() {
                 </button>
               </div>
               {teamPhotoMode === 'url' ? (
-                <input {...register('teamPhoto')} placeholder="https://example.com/image.jpg" />
+                <input type="url" {...register('teamPhoto')} placeholder="https://example.com/image.jpg" />
               ) : (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleTeamPhotoUpload}
-                  style={{ padding: '8px 0' }}
-                />
+                <FileUpload.Root>
+                  <FileUpload.DropZone onDropFiles={handleTeamPhotoDrop} />
+                  <FileUpload.List>
+                    {teamPhotoFiles.map((file) => (
+                      <FileUpload.ListItemProgressBar
+                        key={file.id}
+                        {...file}
+                        onDelete={handleTeamPhotoDelete}
+                        onRetry={handleTeamPhotoRetry}
+                      />
+                    ))}
+                  </FileUpload.List>
+                </FileUpload.Root>
               )}
-              {teamPhotoPreview && (
+              {teamPhotoMode === 'url' && teamPhotoPreview && (
                 <div style={{ marginTop: 12, borderRadius: 8, overflow: 'hidden', border: '1px solid var(--color-gray-200)' }}>
                   <img
                     src={teamPhotoPreview}
