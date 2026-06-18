@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FiPlus, FiEdit2, FiTrash2, FiUpload, FiX, FiLink } from 'react-icons/fi';
 import API from '../../api/axios';
 import SEO from '../../components/common/SEO';
+import { FileUpload } from '../../components/common/FileUpload';
 
 export default function AdminCRUD({ title, endpoint, columns, formFields, imageField = 'image' }) {
   const [items, setItems] = useState([]);
@@ -13,6 +14,7 @@ export default function AdminCRUD({ title, endpoint, columns, formFields, imageF
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
   const [preview, setPreview] = useState(null);
   const [uploadModes, setUploadModes] = useState({});
+  const [uploadFiles, setUploadFiles] = useState({});
 
   const fetchItems = useCallback(async () => {
     setLoading(true);
@@ -30,19 +32,116 @@ export default function AdminCRUD({ title, endpoint, columns, formFields, imageF
 
   useEffect(() => { fetchItems(); }, [fetchItems]);
 
-  const handleUpload = async (file) => {
+  const handleUpload = async (file, onProgress) => {
     const formData = new FormData();
     formData.append('file', file);
-    setUploading(true);
     try {
-      const { data } = await API.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-      // Backend returns { success: true, data: { url, publicId, ... } }
+      const { data } = await API.post('/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (e) => {
+          if (e.total && onProgress) {
+            onProgress(Math.round((e.loaded * 100) / e.total));
+          }
+        }
+      });
       return data.data?.url || data.url || data.file?.url || null;
     } catch (err) {
       const msg = err.response?.data?.message || err.message || 'Upload failed';
       alert(`Upload error: ${msg}`);
       return null;
-    } finally { setUploading(false); }
+    }
+  };
+
+  const handleFileDrop = (fieldKey, files) => {
+    const newFiles = Array.from(files).map((file) => ({
+      id: Math.random().toString(36).slice(2),
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      progress: 0,
+      failed: false,
+      fileObject: file,
+    }));
+
+    setUploadFiles((prev) => ({
+      ...prev,
+      [fieldKey]: [...newFiles, ...(prev[fieldKey] || [])],
+    }));
+
+    newFiles.forEach(({ id, fileObject }) => {
+      handleUpload(fileObject, (progress) => {
+        setUploadFiles((prev) => ({
+          ...prev,
+          [fieldKey]: (prev[fieldKey] || []).map((f) =>
+            f.id === id ? { ...f, progress, failed: progress === 100 ? false : f.failed } : f
+          ),
+        }));
+      }).then((url) => {
+        if (url) {
+          setUploadFiles((prev) => ({
+            ...prev,
+            [fieldKey]: (prev[fieldKey] || []).map((f) =>
+              f.id === id ? { ...f, progress: 100, url } : f
+            ),
+          }));
+          setValue(fieldKey, url);
+          setPreview(url);
+        } else {
+          setUploadFiles((prev) => ({
+            ...prev,
+            [fieldKey]: (prev[fieldKey] || []).map((f) =>
+              f.id === id ? { ...f, failed: true, progress: 0 } : f
+            ),
+          }));
+        }
+      });
+    });
+  };
+
+  const handleFileDelete = (fieldKey, fileId) => {
+    setUploadFiles((prev) => ({
+      ...prev,
+      [fieldKey]: (prev[fieldKey] || []).filter((f) => f.id !== fileId),
+    }));
+  };
+
+  const handleFileRetry = (fieldKey, fileId) => {
+    const file = (uploadFiles[fieldKey] || []).find((f) => f.id === fileId);
+    if (!file) return;
+
+    setUploadFiles((prev) => ({
+      ...prev,
+      [fieldKey]: (prev[fieldKey] || []).map((f) =>
+        f.id === fileId ? { ...f, failed: false, progress: 0 } : f
+      ),
+    }));
+
+    handleUpload(file.fileObject, (progress) => {
+      setUploadFiles((prev) => ({
+        ...prev,
+        [fieldKey]: (prev[fieldKey] || []).map((f) =>
+          f.id === fileId ? { ...f, progress } : f
+        ),
+      }));
+    }).then((url) => {
+      if (url) {
+        setUploadFiles((prev) => ({
+          ...prev,
+          [fieldKey]: (prev[fieldKey] || []).map((f) =>
+            f.id === fileId ? { ...f, progress: 100, url } : f
+          ),
+        }));
+        setValue(fieldKey, url);
+        setPreview(url);
+      } else {
+        setUploadFiles((prev) => ({
+          ...prev,
+          [fieldKey]: (prev[fieldKey] || []).map((f) =>
+            f.id === fileId ? { ...f, failed: true, progress: 0 } : f
+          ),
+        }));
+      }
+    });
   };
 
   const toggleUploadMode = (key) => {
@@ -59,11 +158,13 @@ export default function AdminCRUD({ title, endpoint, columns, formFields, imageF
 
       const mode = uploadModes[key] || 'url';
       if (mode === 'file') {
-        const fileInput = document.querySelector(`#${key}-upload`);
-        if (fileInput?.files?.[0]) {
-          const url = await handleUpload(fileInput.files[0]);
-          if (url) payload[key] = url;
-          else { alert('Upload failed'); return; }
+        const files = uploadFiles[key] || [];
+        const completedFile = files.find((f) => f.progress === 100 && f.url && !f.failed);
+        if (completedFile) {
+          payload[key] = completedFile.url;
+        } else if (files.length > 0) {
+          alert('Please wait for uploads to complete');
+          return;
         } else if (!editing) {
           payload[key] = '';
         }
@@ -82,6 +183,7 @@ export default function AdminCRUD({ title, endpoint, columns, formFields, imageF
       reset();
       setPreview(null);
       setUploadModes({});
+      setUploadFiles({});
       fetchItems();
     } catch (err) {
       alert(err.response?.data?.message || 'Error saving');
@@ -116,6 +218,7 @@ export default function AdminCRUD({ title, endpoint, columns, formFields, imageF
     reset();
     setPreview(null);
     setUploadModes({});
+    setUploadFiles({});
     setShowModal(true);
   };
 
@@ -176,35 +279,47 @@ export default function AdminCRUD({ title, endpoint, columns, formFields, imageF
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="admin-form-grid">
                     {Object.entries(formFields).map(([key, field]) => {
-                      const fullField = field.type === 'textarea' || field.type === 'file';
                       if (field.type === 'file') {
                         const mode = uploadModes[key] || 'url';
+                        const files = uploadFiles[key] || [];
                         return (
-                          <div className={`form-group ${fullField ? 'form-group--full' : ''}`} key={key}>
+                          <div className={`form-group form-group--full`} key={key}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                               <label className="form-label" style={{ marginBottom: 0 }}>{field.label}</label>
-                              <button type="button" className={`upload-toggle ${mode === 'url' ? 'upload-toggle--url' : 'upload-toggle--file'}`} onClick={() => toggleUploadMode(key)}>
-                                {mode === 'url' ? <><FiLink size={14} /> URL</> : <><FiUpload size={14} /> Upload</>}
-                              </button>
+                              <div style={{ display: 'flex', gap: 6 }}>
+                                <button type="button" className={`upload-toggle ${mode === 'url' ? 'upload-toggle--url' : 'upload-toggle--file'}`} onClick={() => toggleUploadMode(key)}>
+                                  {mode === 'url' ? <><FiLink size={14} /> URL</> : <><FiUpload size={14} /> Upload</>}
+                                </button>
+                              </div>
                             </div>
 
                             {mode === 'url' ? (
-                              <input
-                                type="url"
-                                {...register(key, field.required ? { required: `${field.label} is required` } : {})}
-                                placeholder="https://example.com/image.jpg"
-                                onChange={(e) => { setPreview(e.target.value); }}
-                              />
+                              <>
+                                <input
+                                  type="url"
+                                  {...register(key, field.required ? { required: `${field.label} is required` } : {})}
+                                  placeholder="https://example.com/image.jpg"
+                                  onChange={(e) => { setPreview(e.target.value); }}
+                                />
+                                {preview && <img src={preview} alt="" className="admin-crud__upload-preview" />}
+                              </>
                             ) : (
-                              <input
-                                type="file"
-                                id={`${key}-upload`}
-                                accept="image/*,video/*"
-                                onChange={(e) => { if (e.target.files[0]) setPreview(URL.createObjectURL(e.target.files[0])); }}
-                              />
+                              <FileUpload.Root>
+                                <FileUpload.DropZone
+                                  onDropFiles={(dropped) => handleFileDrop(key, dropped)}
+                                />
+                                <FileUpload.List>
+                                  {files.map((file) => (
+                                    <FileUpload.ListItemProgressBar
+                                      key={file.id}
+                                      {...file}
+                                      onDelete={() => handleFileDelete(key, file.id)}
+                                      onRetry={() => handleFileRetry(key, file.id)}
+                                    />
+                                  ))}
+                                </FileUpload.List>
+                              </FileUpload.Root>
                             )}
-
-                            {preview && <img src={preview} alt="" className="admin-crud__upload-preview" />}
                             {errors[key] && <p className="form-error">{errors[key].message}</p>}
                           </div>
                         );
