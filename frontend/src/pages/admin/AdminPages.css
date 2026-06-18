@@ -108,7 +108,7 @@
 .admin-crud__actions .delete:hover { background: rgba(158, 10, 10, 0.1); color: var(--color-error); }
 
 /* Admin Modal */
-.admin-modal {
+.admin-modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 5000;
@@ -116,14 +116,14 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
+  padding: 16px;
 }
 
-.admin-modal__card {
+.admin-modal {
   background: var(--color-canvas);
   border-radius: var(--radius-lg);
-  padding: 32px;
   width: 100%;
-  max-width: 560px;
+  max-width: 640px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
@@ -133,6 +133,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 24px 28px 0;
   margin-bottom: 24px;
 }
 
@@ -146,15 +147,78 @@
   align-items: center;
   justify-content: center;
   background: var(--color-surface-card);
+  flex-shrink: 0;
 }
 
 .admin-modal__close:hover { background: var(--color-secondary-bg); }
+
+.admin-modal__body {
+  padding: 0 28px 28px;
+}
 
 .admin-modal__actions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
   margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-hairline-soft);
+}
+
+/* Upload Toggle */
+.upload-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface-card);
+  color: var(--color-mute);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.upload-toggle:hover {
+  border-color: var(--color-stone);
+  background: var(--color-canvas);
+}
+
+.upload-toggle--url {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(230, 0, 35, 0.05);
+}
+
+.upload-toggle--file {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(230, 0, 35, 0.05);
+}
+
+/* Admin Form Grid */
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-form-grid .form-group--full {
+  grid-column: 1 / -1;
+}
+
+.admin-crud__upload-preview {
+  margin-top: 8px;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  max-height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hairline-soft);
 }
 
 /* Admin Page Header */
@@ -166,3 +230,72 @@
 }
 
 .admin-page-header h1 { font-size: 1.5rem; letter-spacing: -0.02em; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-stats__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-crud__table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-crud__table {
+    min-width: 600px;
+  }
+
+  .admin-crud__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .admin-modal-overlay {
+    padding: 8px;
+    align-items: flex-end;
+  }
+
+  .admin-modal {
+    max-height: 85vh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .admin-modal__header {
+    padding: 20px 20px 0;
+  }
+
+  .admin-modal__body {
+    padding: 0 20px 20px;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-form-grid .form-group--full {
+    grid-column: 1;
+  }
+
+  .admin-modal__actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-modal__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-stats__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

@@ -168,88 +168,93 @@ export default function AdminCRUD({ title, endpoint, columns, formFields, imageF
         {showModal && (
           <div className="admin-modal-overlay" onClick={() => setShowModal(false)}>
             <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+              <div className="admin-modal__header">
                 <h2>{editing ? `Edit ${title}` : `Add ${title}`}</h2>
-                <button onClick={() => setShowModal(false)} style={{ background: 'var(--color-gray-100)', width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FiX size={18} /></button>
+                <button className="admin-modal__close" onClick={() => setShowModal(false)}><FiX size={18} /></button>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                {Object.entries(formFields).map(([key, field]) => {
-                  if (field.type === 'file') {
-                    const mode = uploadModes[key] || 'url';
-                    return (
-                      <div className="form-group" key={key}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                          <label className="form-label" style={{ marginBottom: 0 }}>{field.label}</label>
-                          <button type="button" className={`upload-toggle ${mode === 'url' ? 'upload-toggle--url' : 'upload-toggle--file'}`} onClick={() => toggleUploadMode(key)}>
-                            {mode === 'url' ? <><FiLink size={14} /> Paste URL</> : <><FiUpload size={14} /> Upload File</>}
-                          </button>
+              <div className="admin-modal__body">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="admin-form-grid">
+                    {Object.entries(formFields).map(([key, field]) => {
+                      const fullField = field.type === 'textarea' || field.type === 'file';
+                      if (field.type === 'file') {
+                        const mode = uploadModes[key] || 'url';
+                        return (
+                          <div className={`form-group ${fullField ? 'form-group--full' : ''}`} key={key}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                              <label className="form-label" style={{ marginBottom: 0 }}>{field.label}</label>
+                              <button type="button" className={`upload-toggle ${mode === 'url' ? 'upload-toggle--url' : 'upload-toggle--file'}`} onClick={() => toggleUploadMode(key)}>
+                                {mode === 'url' ? <><FiLink size={14} /> URL</> : <><FiUpload size={14} /> Upload</>}
+                              </button>
+                            </div>
+
+                            {mode === 'url' ? (
+                              <input
+                                type="url"
+                                {...register(key, field.required ? { required: `${field.label} is required` } : {})}
+                                placeholder="https://example.com/image.jpg"
+                                onChange={(e) => { setPreview(e.target.value); }}
+                              />
+                            ) : (
+                              <input
+                                type="file"
+                                id={`${key}-upload`}
+                                accept="image/*,video/*"
+                                onChange={(e) => { if (e.target.files[0]) setPreview(URL.createObjectURL(e.target.files[0])); }}
+                              />
+                            )}
+
+                            {preview && <img src={preview} alt="" className="admin-crud__upload-preview" />}
+                            {errors[key] && <p className="form-error">{errors[key].message}</p>}
+                          </div>
+                        );
+                      }
+                      if (field.type === 'textarea') {
+                        return (
+                          <div className={`form-group form-group--full`} key={key}>
+                            <label className="form-label">{field.label}</label>
+                            <textarea rows={4} {...register(key, field.required ? { required: `${field.label} is required` } : {})} placeholder={field.placeholder || ''} />
+                            {errors[key] && <p className="form-error">{errors[key].message}</p>}
+                          </div>
+                        );
+                      }
+                      if (field.type === 'select') {
+                        return (
+                          <div className="form-group" key={key}>
+                            <label className="form-label">{field.label}</label>
+                            <select {...register(key, field.required ? { required: `${field.label} is required` } : {})}>
+                              <option value="">Select...</option>
+                              {field.options.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
+                            </select>
+                          </div>
+                        );
+                      }
+                      if (field.type === 'number') {
+                        return (
+                          <div className="form-group" key={key}>
+                            <label className="form-label">{field.label}</label>
+                            <input type="number" {...register(key, field.required ? { required: `${field.label} is required` } : {})} placeholder={field.placeholder || ''} />
+                          </div>
+                        );
+                      }
+                      return (
+                        <div className="form-group" key={key}>
+                          <label className="form-label">{field.label}</label>
+                          <input type={field.type || 'text'} {...register(key, field.required ? { required: `${field.label} is required` } : {})} placeholder={field.placeholder || ''} />
+                          {errors[key] && <p className="form-error">{errors[key].message}</p>}
                         </div>
+                      );
+                    })}
+                  </div>
 
-                        {mode === 'url' ? (
-                          <input
-                            type="url"
-                            {...register(key, field.required ? { required: `${field.label} is required` } : {})}
-                            placeholder="https://example.com/image.jpg"
-                            onChange={(e) => { setPreview(e.target.value); }}
-                          />
-                        ) : (
-                          <input
-                            type="file"
-                            id={`${key}-upload`}
-                            accept="image/*,video/*"
-                            onChange={(e) => { if (e.target.files[0]) setPreview(URL.createObjectURL(e.target.files[0])); }}
-                          />
-                        )}
-
-                        {preview && <img src={preview} alt="" className="admin-crud__upload-preview" />}
-                        {errors[key] && <p className="form-error">{errors[key].message}</p>}
-                      </div>
-                    );
-                  }
-                  if (field.type === 'textarea') {
-                    return (
-                      <div className="form-group" key={key}>
-                        <label className="form-label">{field.label}</label>
-                        <textarea rows={4} {...register(key, field.required ? { required: `${field.label} is required` } : {})} placeholder={field.placeholder || ''} />
-                        {errors[key] && <p className="form-error">{errors[key].message}</p>}
-                      </div>
-                    );
-                  }
-                  if (field.type === 'select') {
-                    return (
-                      <div className="form-group" key={key}>
-                        <label className="form-label">{field.label}</label>
-                        <select {...register(key, field.required ? { required: `${field.label} is required` } : {})}>
-                          <option value="">Select...</option>
-                          {field.options.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                        </select>
-                      </div>
-                    );
-                  }
-                  if (field.type === 'number') {
-                    return (
-                      <div className="form-group" key={key}>
-                        <label className="form-label">{field.label}</label>
-                        <input type="number" {...register(key, field.required ? { required: `${field.label} is required` } : {})} placeholder={field.placeholder || ''} />
-                      </div>
-                    );
-                  }
-                  return (
-                    <div className="form-group" key={key}>
-                      <label className="form-label">{field.label}</label>
-                      <input type={field.type || 'text'} {...register(key, field.required ? { required: `${field.label} is required` } : {})} placeholder={field.placeholder || ''} />
-                      {errors[key] && <p className="form-error">{errors[key].message}</p>}
-                    </div>
-                  );
-                })}
-
-                <div className="admin-modal__actions">
-                  <button type="button" className="btn btn-outline btn-sm" onClick={() => setShowModal(false)}>Cancel</button>
-                  <button type="submit" className="btn btn-primary btn-sm" disabled={uploading}>
-                    {uploading ? 'Uploading...' : editing ? 'Update' : 'Create'}
-                  </button>
-                </div>
-              </form>
+                  <div className="admin-modal__actions">
+                    <button type="button" className="btn btn-outline btn-sm" onClick={() => setShowModal(false)}>Cancel</button>
+                    <button type="submit" className="btn btn-primary btn-sm" disabled={uploading}>
+                      {uploading ? 'Uploading...' : editing ? 'Update' : 'Create'}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         )}
